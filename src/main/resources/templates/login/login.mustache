@@ -64,10 +64,9 @@
             -webkit-overflow-scrolling: touch;
         }
     </style>
-
-
     <!-- Custom styles for this template -->
     <link href="/css/signin.css" rel="stylesheet">
+
 </head>
 <body class="text-center">
 
@@ -86,14 +85,41 @@
         </div>
 
         <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" value="remember-me"> Remember me
-            </label>
         </div>
-        <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+        <button class="w-100 btn btn-lg btn-primary" type="button" id = "login-btn">Sign in</button>
         <a class="w-100 btn btn-lg btn-danger" href="/register">Sign up</a>
         <p class="mt-5 mb-3 text-muted">&copy; 2017-2023</p>
     </form>
 </main>
-</body>
+</body>ㅌㄷ
+<script>
+    {
+        const registerBtn = document.querySelector("#login-btn")
+        registerBtn.addEventListener("click", event => {
+            const user = {
+                username : document.querySelector("#floatingInput").value,
+                password : document.querySelector("#floatingPassword").value,
+            };
+            console.log(user);
+            const url = "/api/login";
+            fetch(url, {
+                method: "post",
+                body: JSON.stringify(user),
+                headers: {
+                    "Content-Type" : "application/json"
+                }
+            }).then(response => {
+
+                if (response.ok) {
+                    alert("로그인이 완료되었습니다.");
+                    console.log("로그인이 완료되었습니다.");
+                    window.location.replace("http://localhost:8080/products");
+                } else {
+                    alert("로그인 실패");
+                    console.log("로그인 실패");
+                }
+            }) ;
+        });
+    }
+</script>
 </html>

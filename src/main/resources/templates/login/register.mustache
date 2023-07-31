@@ -81,15 +81,15 @@
             <label for="floatingUsername">Username</label>
         </div>
         <div class="form-floating m-1">
-            <input type="text" class="form-control" id="floatingPassword">
+            <input type="password" class="form-control" id="floatingPassword">
             <label for="floatingPassword">Password</label>
         </div>
         <div class="form-floating m-1">
-            <input type="text" class="form-control" id="floatingRePassword">
+            <input type="password" class="form-control" id="floatingRePassword">
             <label for="floatingRePassword">Repeat new password</label>
         </div>
         <div class="form-floating m-1">
-            <input type="text" class="form-control" id="floatingEmail">
+            <input type="email" class="form-control" id="floatingEmail">
             <label for="floatingEmail">email</label>
         </div>
         <button class="w-100 btn btn-lg btn-primary" id="reegister-btn" type="button">Sign up</button>
@@ -107,7 +107,7 @@
             rePassword : document.querySelector("#floatingRePassword").value,
             email : document.querySelector("#floatingEmail").value
         };
-        const url = "/register";
+        const url = "/api/register";
         fetch(url, {
             method: "post",
             body: JSON.stringify(user),
@@ -118,11 +118,9 @@
             const msg = (response.ok) ? "회원가입이 완료되었습니다." : "회원 가입 실패";
             alert(msg);
             console.log(msg);
-            window.location.reload();
+            window.location.replace("http://localhost:8080/login");
         }) ;
     });
 }
 </script>
-
-
 </html>

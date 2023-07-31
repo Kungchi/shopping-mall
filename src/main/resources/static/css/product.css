@@ -1,0 +1,20 @@
+.cards-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.card {
+    flex-basis: calc(20% - 2%); /* 20% is the desired width, and 2% is twice the margin */
+    margin: 1%;
+}
+@media (max-width: 600px) {
+    .card {
+        flex-basis: calc(50% - 2%);
+    }
+}
+
+@media (max-width: 400px) {
+    .card {
+        flex-basis: calc(100% - 2%);
+    }
+}

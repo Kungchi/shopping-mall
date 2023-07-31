@@ -9,6 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Member;
+import java.util.Optional;
+
 @Slf4j
 @Service
 public class userService {
@@ -22,5 +25,12 @@ public class userService {
 
         userRepository.save(userEntity);
         return userEntity.toDto();
+    }
+
+    public userDto login(userDto dto) {
+        Optional<userEntity> target = userRepository.findByUsernameAndPassword(dto.getUsername(), dto.getPassword());
+
+        userEntity logined = target.get();
+        return logined.toDto();
     }
 }
