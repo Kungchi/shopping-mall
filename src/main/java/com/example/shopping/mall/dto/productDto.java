@@ -1,6 +1,6 @@
 package com.example.shopping.mall.dto;
 
-import com.example.shopping.mall.entity.userEntity;
+import com.example.shopping.mall.entity.productEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

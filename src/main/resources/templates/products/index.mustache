@@ -2,10 +2,12 @@
 <div class="cards-wrapper">
     {{#productDto}}
         <div class="card" style="width: 16rem;">
-            <img src="{{img}}" class="card-img-top">
-            <div class="card-body">
-                <h5 class="card-title">{{title}}</h5>
-            </div>
+            <a href="/products/show/{{id}}" class="my-link">
+                <img src="{{img}}" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">{{title}}</h5>
+                </div>
+            </a>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">{{content}}</li>
                 <li class="list-group-item">{{price}}원</li>

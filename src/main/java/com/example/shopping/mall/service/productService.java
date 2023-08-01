@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,5 +19,10 @@ public class productService {
         List<productDto> dtos = productrepository.findAll()
                 .stream().map(entity -> entity.toDto()).collect(Collectors.toList());
         return dtos;
+    }
+
+    public productDto show(Long id) {
+        Optional<productEntity> target = productrepository.findById(id);
+        return target.get().toDto();
     }
 }

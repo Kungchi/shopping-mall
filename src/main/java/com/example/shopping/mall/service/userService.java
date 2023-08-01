@@ -27,10 +27,10 @@ public class userService {
         return userEntity.toDto();
     }
 
-    public userDto login(userDto dto) {
+    public userEntity login(userDto dto) {
         Optional<userEntity> target = userRepository.findByUsernameAndPassword(dto.getUsername(), dto.getPassword());
 
         userEntity logined = target.get();
-        return logined.toDto();
+        return logined;
     }
 }

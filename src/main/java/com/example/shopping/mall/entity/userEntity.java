@@ -15,11 +15,14 @@ public class userEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
+
+    @Column(nullable = false, length = 15)
     private String username;
-    @Column
+
+    @Column(nullable = false, length = 40)
     private String password;
-    @Column
+
+    @Column(length = 40)
     private String email;
 
     public userDto toDto() {

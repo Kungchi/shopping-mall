@@ -20,17 +20,17 @@ public class productEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne //다 대 일 관계 유저와 상품
+    @ManyToOne //다 대 일 관계 유저와 상품 -> 유저가 상품을 등록할수있음.
     @JoinColumn(name = "user_id")
     private userEntity user;
 
-    @Column
+    @Column(nullable = false, length = 100)
     private String title;
 
-    @Column
+    @Column(nullable = false, length = 400)
     private String content;
 
-    @Column
+    @Column(nullable = false, length = 400)
     private int price;
 
     @Column

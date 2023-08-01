@@ -18,3 +18,12 @@
         flex-basis: calc(100% - 2%);
     }
 }
+
+.my-link {
+    color: black !important;
+    text-decoration: none;
+}
+
+.my-link:hover {
+    color: blue !important;
+}
