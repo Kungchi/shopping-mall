@@ -93,33 +93,34 @@
 </main>
 </body>
 <script>
-    {
-        const registerBtn = document.querySelector("#login-btn")
-        registerBtn.addEventListener("click", event => {
-            const user = {
-                username : document.querySelector("#floatingInput").value,
-                password : document.querySelector("#floatingPassword").value,
-            };
-            console.log(user);
-            const url = "/api/login";
-            fetch(url, {
-                method: "post",
-                body: JSON.stringify(user),
-                headers: {
-                    "Content-Type" : "application/json"
-                }
-            }).then(response => {
-
-                if (response.ok) {
-                    alert("로그인이 완료되었습니다.");
-                    console.log("로그인이 완료되었습니다.");
-                    window.location.replace("http://localhost:8080/products");
-                } else {
-                    alert("로그인 실패");
-                    console.log("로그인 실패");
-                }
-            }) ;
-        });
-    }
+{
+    const registerBtn = document.querySelector("#login-btn")
+    registerBtn.addEventListener("click", event => {
+        const user = {
+            username : document.querySelector("#floatingInput").value,
+            password : document.querySelector("#floatingPassword").value,
+        };
+        console.log(user);
+        const url = "/api/login";
+        fetch(url, {
+            method: "post",
+            body: JSON.stringify(user),
+            headers: {
+                "Content-Type" : "application/json"
+            }
+        }).then(response => {
+            if (response.ok) {
+                alert("로그인이 완료되었습니다.");
+                console.log("로그인이 완료되었습니다.");
+                window.location.replace("http://localhost:8080/products");
+            } else {
+                response.text().then(errorMessage => {
+                    alert("로그인 실패: " + errorMessage);
+                    console.log("로그인 실패: " + errorMessage);
+                });
+            }
+        }) ;
+    });
+}
 </script>
 </html>

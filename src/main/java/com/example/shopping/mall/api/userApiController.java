@@ -24,17 +24,25 @@ public class userApiController {
     private userService userService;
 
     @PostMapping("/api/register")
-    public ResponseEntity<userDto> register(@RequestBody userDto dto) {
-        userDto registered = userService.register(dto);
-        return ResponseEntity.status(HttpStatus.OK).body(registered);
+    public ResponseEntity<?> register(@RequestBody userDto dto) {
+        try {
+            userDto registered = userService.register(dto);
+            return ResponseEntity.status(HttpStatus.OK).body(registered);
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+        }
     }
 
     @PostMapping("/api/login")
-    public ResponseEntity<userDto> login(@RequestBody userDto dto, HttpSession session) {
-        userEntity entity = userService.login(dto);
-        session.setAttribute("userId", entity.getId());
+    public ResponseEntity<?> login(@RequestBody userDto dto, HttpSession session) {
+        try {
+            userEntity entity = userService.login(dto);
+            session.setAttribute("userId", entity.getId());
 
-        userDto logined = entity.toDto();
-        return logined != null ? ResponseEntity.status(HttpStatus.OK).body(logined) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            userDto logined = entity.toDto();
+            return ResponseEntity.ok(logined);
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
+        }
     }
 }

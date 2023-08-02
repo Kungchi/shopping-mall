@@ -101,12 +101,23 @@
 {
     const registerBtn = document.querySelector("#reegister-btn")
     registerBtn.addEventListener("click", event => {
+        const username = document.querySelector("#floatingUsername").value;
+        const password = document.querySelector("#floatingPassword").value;
+        const rePassword = document.querySelector("#floatingRePassword").value;
+        const email = document.querySelector("#floatingEmail").value;
+
+        if (password !== rePassword) {
+            alert("비밀번호가 서로 일치하지 않습니다.");
+            return;
+        }
+
         const user = {
-            username : document.querySelector("#floatingUsername").value,
-            password : document.querySelector("#floatingPassword").value,
-            rePassword : document.querySelector("#floatingRePassword").value,
-            email : document.querySelector("#floatingEmail").value
+            username: username,
+            password: password,
+            rePassword: rePassword,
+            email: email
         };
+
         const url = "/api/register";
         fetch(url, {
             method: "post",
@@ -115,11 +126,13 @@
                 "Content-Type" : "application/json"
             }
         }).then(response => {
-            const msg = (response.ok) ? "회원가입이 완료되었습니다." : "회원 가입 실패";
-            alert(msg);
-            console.log(msg);
-            window.location.replace("http://localhost:8080/login");
-        }) ;
+            if (response.ok) {
+                alert("회원가입이 완료되었습니다.");
+                window.location.replace("http://localhost:8080/login");
+            } else {
+                response.text().then(errorMessage => alert(errorMessage));
+            }
+        });
     });
 }
 </script>
