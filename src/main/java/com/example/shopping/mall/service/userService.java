@@ -23,10 +23,11 @@ public class userService {
 
         userEntity userEntity = dto.toEntity();
         String username = userEntity.getUsername();
-        String dbUsername = userRepository.findByUsername(username).get().getUsername();
-        if (username.equals(dbUsername)){
+
+        if (userRepository.findByUsername(username).isPresent()){
             throw new IllegalArgumentException("가입 실패 username이 중복되었습니다.");
         }
+
         userRepository.save(userEntity);
         return userEntity.toDto();
     }
@@ -41,7 +42,10 @@ public class userService {
         if (!user.getPassword().equals(dto.getPassword())) {
             throw new IllegalArgumentException("비밀번호가 틀렸습니다.");
         }
-
         return user;
+    }
+
+    public userEntity find(Long userId) {
+        return userId != null ? userRepository.findById(userId).orElse(null) : null;
     }
 }

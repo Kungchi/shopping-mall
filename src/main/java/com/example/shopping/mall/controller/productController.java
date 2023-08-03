@@ -1,6 +1,10 @@
 package com.example.shopping.mall.controller;
 import com.example.shopping.mall.dto.productDto;
+import com.example.shopping.mall.dto.userDto;
+import com.example.shopping.mall.entity.userEntity;
 import com.example.shopping.mall.service.productService;
+import com.example.shopping.mall.service.userService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,17 +17,27 @@ import java.util.List;
 public class productController {
     @Autowired
     productService productService;
+    @Autowired
+    userService userService;
 
     @GetMapping("/products")
-    public String index(Model model) {
+    public String index(Model model, HttpSession session) {
         List<productDto> dtos = productService.index();
+        Long userId = (Long) session.getAttribute("userId");
+        userEntity userEntity = userService.find(userId);
+
         model.addAttribute("productDto", dtos);
+        model.addAttribute("userEntity", userEntity);
         return "products/index";
     }
 
     @GetMapping("/products/show/{id}")
-        public String show(@PathVariable Long id, Model model) {
+        public String show(@PathVariable Long id, Model model, HttpSession session) {
         productDto dto = productService.show(id);
+        userEntity entity = (userEntity) session.getAttribute("user");
+
+
+        model.addAttribute("logined", entity != null);
         model.addAttribute("productDto", dto);
         return "products/show";
     }

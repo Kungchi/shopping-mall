@@ -21,39 +21,38 @@
 {{/productDto}}
 
 <script>
-    {
-        let now = new Date();
-        let currentTime = now.toISOString().slice(0, 19);
-        const orderBtn = document.querySelector("#order-btn")
-        orderBtn.addEventListener("click", event => {
-            const orderProduct = {
-                user_id : document.querySelector("#userId").value,
-                product_id : document.querySelector("#productId").value,
-                quantity : document.querySelector("#quantity").value,
-                address : document.querySelector("#address").value + " " +document.querySelector("#address_detail").value,
-                order_date : currentTime
-            };
-            console.log(orderProduct);
-            const url = "/api/order/" + orderProduct.product_id;
-            console.log(url);
-            fetch(url, {
-                method: "post",
-                body: JSON.stringify(orderProduct),
-                headers: {
-                    "Content-Type" : "application/json"
-                }
-            }).then(response => {
-                if (response.ok) {
-                    alert("주문 되었습니다.");
-                    console.log("주문 되었습니다.");
-                    window.location.replace("http://localhost:8080/products");
-                } else {
-                    alert("주문 실패");
-                    console.log("주문 실패");
-                }
-            }) ;
-        });
-    }
+{
+    let now = new Date();
+    let currentTime = now.toISOString().slice(0, 19);
+    const orderBtn = document.querySelector("#order-btn")
+    orderBtn.addEventListener("click", event => {
+        const orderProduct = {
+            user_id : document.querySelector("#userId").value,
+            product_id : document.querySelector("#productId").value,
+            quantity : document.querySelector("#quantity").value,
+            address : document.querySelector("#address").value + " " +document.querySelector("#address_detail").value,
+            order_date : currentTime
+        };
+        console.log(orderProduct);
+        const url = "/api/order/" + orderProduct.product_id;
+        console.log(url);
+        fetch(url, {
+            method: "post",
+            body: JSON.stringify(orderProduct),
+            headers: {
+                "Content-Type" : "application/json"
+            }
+        }).then(response => {
+            if (response.ok) {
+                alert("주문 되었습니다.");
+                console.log("주문 되었습니다.");
+                window.location.replace("http://localhost:8080/products");
+            } else {
+                response.text().then(errorMessage => alert(errorMessage));
+            }
+        }) ;
+    });
+}
 </script>
 
 {{>layouts/footer}}

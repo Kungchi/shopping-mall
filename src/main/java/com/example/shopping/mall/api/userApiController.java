@@ -37,12 +37,35 @@ public class userApiController {
     public ResponseEntity<?> login(@RequestBody userDto dto, HttpSession session) {
         try {
             userEntity entity = userService.login(dto);
-            session.setAttribute("userId", entity.getId());
+            session.setAttribute("user", entity);
 
             userDto logined = entity.toDto();
             return ResponseEntity.ok(logined);
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
+        }
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(HttpSession session) {
+        session.removeAttribute("user");
+        return ResponseEntity.ok().build();
+    }
+
+
+    //혹시 모르니까 만들어놨음
+    @GetMapping("/api/user")
+    public ResponseEntity<?> getUser(HttpSession session) {
+        userEntity user = (userEntity) session.getAttribute("user");
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
+        }
+
+        try {
+            userDto userDto = user.toDto();
+            return ResponseEntity.ok(userDto);
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
         }
     }
 }

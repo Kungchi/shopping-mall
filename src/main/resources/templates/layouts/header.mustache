@@ -12,7 +12,7 @@
 <body>
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
+        <a class="navbar-brand" href="/products">Navbar</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -38,11 +38,54 @@
                 <li class="nav-item">
                     <a class="nav-link disabled" aria-disabled="true">Disabled</a>
                 </li>
+                <li class="nav-item">
+                    {{#user}}
+                        <!-- 로그인 했을 때 -->
+                        <a class="nav-link" href="/products/order/{{id}}/list">주문목록</a>
+                    {{/user}}
+                    {{^user}}
+                        <!-- 로그인 안 했을 때 -->
+                    {{/user}}
+                </li>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    {{#user}}
+                        <!-- 로그인 했을 때 -->
+                        <a class="nav-link">Logged in as: {{username}}</a>
+                    {{/user}}
+                    {{^user}}
+                        <!-- 로그인 안 했을 때 -->
+                        <a class="nav-link" href="/login">로그인</a>
+                    {{/user}}
+                </li>
+                <li class="nav-item">
+                    {{#user}}
+                    <!-- 로그인 했을 때 -->
+                    <a class="nav-link" href="#" onclick="logout()">Logout</a>
+                    {{/user}}
+                    {{^user}}
+                        <!-- 로그인 안 했을 때 -->
+                    {{/user}}
+                </li>
+            </ul>
         </div>
     </div>
 </nav>
+
+<script>
+    function logout() {
+        // 로그아웃 요청을 보내는 AJAX 호출
+        fetch('/logout', {
+            method: 'POST'
+        }).then((response) => {
+            if (response.ok) {
+                // 로그아웃이 성공하면 페이지를 새로고침하여 사용자를 로그아웃 상태로 만듭니다.
+                location.reload();
+            } else {
+                alert('Logout failed');
+            }
+        });
+    }
+</script>
+

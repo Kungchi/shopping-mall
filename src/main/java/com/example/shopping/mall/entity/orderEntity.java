@@ -35,13 +35,13 @@ public class orderEntity {
     private int quantity;
 
     @Column
-    private String adress;
+    private String address;
 
     @Column
     @CurrentTimestamp
     private LocalDateTime order_date;
 
     public orderDto toDto() {
-        return new orderDto(user.getId(), product.getId(), quantity, adress, order_date);
+        return new orderDto(user.getId(), product.getId(), quantity, address, order_date);
     }
 }

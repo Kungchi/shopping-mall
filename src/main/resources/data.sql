@@ -1,5 +1,6 @@
 INSERT INTO users(username, password, email) VALUES('test', '1234','test@test.com');
 
+-- product 더미테이터
 INSERT INTO products(user_id, title, content, price, img) VALUES(1, '삼성 고속 충전기 25W 너무 좋아요', '충전기', 2000, '//thumbnail10.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/2023/05/11/10/0/d2751228-a16c-44a4-8a1b-eaeeb2e99bcd.jpg');
 INSERT INTO products(user_id, title, content, price, img) VALUES(1, '애플 신형 m1맥북 코딩 이나 머든 그냥 쓰세요 개좋아요!!', '맥북', 1400000, '//thumbnail6.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/2022/07/05/10/0/858f1bfc-a227-496c-b6e8-ba366da71076.jpeg');
 INSERT INTO products(user_id, title, content, price, img) VALUES(1, '로지텍 신형 마우스 드디어 한국 상륙 이거 아무나 못산다 선착순 100명!!', '마우스', 20000, '//thumbnail6.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/2020/05/28/17/9/c7cc777a-3e31-48d2-972b-81446acd3fc6.jpg');
@@ -70,3 +71,10 @@ INSERT INTO products(user_id, title, content, price, img) VALUES(1, '삼성 고�
 INSERT INTO products(user_id, title, content, price, img) VALUES(1, '애플 신형 m1맥북 코딩 이나 머든 그냥 쓰세요 개좋아요!!', '맥북', 1400000, '//thumbnail6.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/2022/07/05/10/0/858f1bfc-a227-496c-b6e8-ba366da71076.jpeg');
 INSERT INTO products(user_id, title, content, price, img) VALUES(1, '로지텍 신형 마우스 드디어 한국 상륙 이거 아무나 못산다 선착순 100명!!', '마우스', 20000, '//thumbnail6.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/2020/05/28/17/9/c7cc777a-3e31-48d2-972b-81446acd3fc6.jpg');
 INSERT INTO products(user_id, title, content, price, img) VALUES(1, '애플 신형 m1맥북 코딩 이나 머든 그냥 쓰세요 개좋아요!!', '맥북', 1400000, '//thumbnail6.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/2022/07/05/10/0/858f1bfc-a227-496c-b6e8-ba366da71076.jpeg');
+-- product 더미테이터
+
+-- order 더미 데이터
+INSERT INTO orders(quantity, order_date, product_id, user_id, address) VALUES(1, NOW(), 1, 1, '집');
+INSERT INTO orders(quantity, order_date, product_id, user_id, address) VALUES(22, NOW(), 2, 1, '집');
+INSERT INTO orders(quantity, order_date, product_id, user_id, address) VALUES(44, NOW(), 3, 1, '집');
+INSERT INTO orders(quantity, order_date, product_id, user_id, address) VALUES(11, NOW(), 4, 1, '집');

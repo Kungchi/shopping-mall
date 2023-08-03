@@ -11,7 +11,9 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class orderService {
@@ -32,5 +34,11 @@ public class orderService {
         orderEntity target = dto.toEntity(userEntity.get(), productEntity.get());
         orderRepository.save(target);
         return target.toDto();
+    }
+
+    public List<orderDto> orderList(Long id) {
+        List<orderEntity> entities = orderRepository.findByUserId(id);
+        List<orderDto> dtos = entities.stream().map(entity -> entity.toDto()).collect(Collectors.toList());
+        return dtos;
     }
 }
