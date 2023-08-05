@@ -17,6 +17,6 @@ public class userDto {
     private String email;
 
     public userEntity toEntity() {
-        return new userEntity(null,username, password, email);
+        return new userEntity(null,false ,username, password, email);
     }
 }

@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 public class OrderProductDto {
+    private Long id;
     private LocalDateTime orderDate;
     private String title;
     private String address;

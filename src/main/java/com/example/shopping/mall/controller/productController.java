@@ -25,6 +25,7 @@ public class productController {
         List<productDto> dtos = productService.index();
         Long userId = (Long) session.getAttribute("userId");
         userEntity userEntity = userService.find(userId);
+        
 
         model.addAttribute("productDto", dtos);
         model.addAttribute("userEntity", userEntity);
@@ -32,7 +33,7 @@ public class productController {
     }
 
     @GetMapping("/products/show/{id}")
-        public String show(@PathVariable Long id, Model model, HttpSession session) {
+    public String show(@PathVariable Long id, Model model, HttpSession session) {
         productDto dto = productService.show(id);
         userEntity entity = (userEntity) session.getAttribute("user");
 
@@ -41,4 +42,10 @@ public class productController {
         model.addAttribute("productDto", dto);
         return "products/show";
     }
+
+    @GetMapping("/products/new")
+    public String newProduct() {
+        return "products/new";
+    }
+
 }

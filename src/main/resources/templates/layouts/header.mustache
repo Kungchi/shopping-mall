@@ -23,8 +23,8 @@
                         카테고리
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">RPG</a></li>
-                        <li><a class="dropdown-item" href="#">FPS</a></li>
+                        <li><a class="dropdown-item" href="#">1번</a></li>
+                        <li><a class="dropdown-item" href="#">2번</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -46,8 +46,20 @@
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     {{#user}}
+                        {{#authority}}
+                            <!-- 권한이 있을때 -->
+                            <a class="nav-link" href="/products/new">상품등록</a>
+                        {{/authority}}
+                        {{^authority}}
+                            <!-- 권한이 없을때 -->
+                        {{/authority}}
+                    {{/user}}
+                </li>
+
+                <li class="nav-item">
+                    {{#user}}
                         <!-- 로그인 했을 때 -->
-                        <a class="nav-link">Logged in as: {{username}}</a>
+                        <a class="nav-link" href="/profile">Logged in as: {{username}}</a>
                     {{/user}}
                     {{^user}}
                         <!-- 로그인 안 했을 때 -->
@@ -76,7 +88,7 @@
         }).then((response) => {
             if (response.ok) {
                 // 로그아웃이 성공하면 페이지를 새로고침하여 사용자를 로그아웃 상태로 만듭니다.
-                location.reload();
+                location.replace("/products");
             } else {
                 alert('Logout failed');
             }

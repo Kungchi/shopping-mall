@@ -52,6 +52,7 @@ public class orderController {
         List<OrderProductDto> orderProductDtos = new ArrayList<>();
         for (int i = 0; i < dtos.size(); i++) {
             OrderProductDto orderProductDto = new OrderProductDto();
+            orderProductDto.setId(productId.get(i));
             orderProductDto.setOrderDate(dtos.get(i).getOrder_date());
             orderProductDto.setTitle(productDtos.get(i).getTitle());
             orderProductDto.setAddress(dtos.get(i).getAddress());
