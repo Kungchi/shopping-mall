@@ -1,6 +1,5 @@
 {{>layouts/header}}
-{{#orderProductDtos}}
-    <h3 style="text-align:center;">{{orderDate}}</h3>
+{{#productDtos}}
     <div class="card mb-3 mx-auto" style="max-width: 540px;">
         <div class="row g-0">
             <div class="col-md-4">
@@ -12,13 +11,12 @@
                 <div class="card-body">
                     <a href="/products/show/{{id}}">
                         <h5 class="card-title">{{title}}</h5>
-                        <p class="card-text">{{address}}</p>
                         <p class="card-text"><small class="text-muted">{{price}}원</small></p>
                     </a>
                 </div>
             </div>
         </div>
     </div>
-{{/orderProductDtos}}
+{{/productDtos}}
 
 {{>layouts/footer}}

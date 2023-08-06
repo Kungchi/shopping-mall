@@ -19,12 +19,18 @@ public class productApiController {
     productService productService;
 
     @PostMapping("/api/products")
-    public ResponseEntity<?> registerProduct(@RequestParam("file") MultipartFile file, @RequestParam("title")
-    String title, @RequestParam("content") String content, @RequestParam("price") int price,
-                                             @RequestParam("category") String category ,HttpSession session) {
+    public ResponseEntity<?> registerProduct(@RequestParam("file") MultipartFile file,
+                                             @RequestParam("title") String title,
+                                             @RequestParam("content") String content,
+                                             @RequestParam("price") int price,
+                                             @RequestParam("category") String category,
+                                             HttpSession session) {
         try {
-
+            // Thumbnail image handling
             String fileName = productService.Img(file);
+
+            // Handling images in content (TinyMCE Editor)
+            content = productService.processContentImages(content);
 
             // DTO 생성
             productDto dto = new productDto();
@@ -32,16 +38,15 @@ public class productApiController {
             dto.setContent(content);
             dto.setPrice(price);
             dto.setImg(fileName);
-            userEntity user =(userEntity) session.getAttribute("user");
-
+            userEntity user = (userEntity) session.getAttribute("user");
 
             // 서비스 호출
             productService.save(dto, user, category);
 
             return new ResponseEntity<>(HttpStatus.CREATED);
-
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 }

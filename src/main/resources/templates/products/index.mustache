@@ -3,13 +3,13 @@
     {{#productDto}}
         <div class="card" style="width: 16rem;">
             <a href="/products/show/{{id}}" class="my-link">
-                <img src="/images/{{img}}" class="card-img-top">
+                <img src="/{{img}}" class="card-img-top" style="width: 100%; height: auto;">
+
                 <div class="card-body">
                     <h5 class="card-title">{{title}}</h5>
                 </div>
             </a>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">{{{content}}}</li>
                 <li class="list-group-item">{{price}}원</li>
                 <li class="list-group-item">평점 : 5.0 / 5.0</li>
             </ul>

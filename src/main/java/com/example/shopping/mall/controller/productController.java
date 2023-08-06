@@ -1,4 +1,6 @@
 package com.example.shopping.mall.controller;
+import com.example.shopping.mall.dto.OrderProductDto;
+import com.example.shopping.mall.dto.orderDto;
 import com.example.shopping.mall.dto.productDto;
 import com.example.shopping.mall.dto.userDto;
 import com.example.shopping.mall.entity.userEntity;
@@ -11,7 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class productController {
@@ -46,6 +50,15 @@ public class productController {
     @GetMapping("/products/new")
     public String newProduct() {
         return "products/new";
+    }
+
+    @GetMapping("/products/productList")
+    public String editProduct(HttpSession session, Model model) {
+        userEntity user =(userEntity) session.getAttribute("user");
+        List<productDto> dtos = productService.findByUser(user.getId());
+
+        model.addAttribute("productDtos", dtos);
+        return "products/productList";
     }
 
 }

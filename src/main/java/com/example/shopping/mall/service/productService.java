@@ -8,12 +8,18 @@ import com.example.shopping.mall.entity.userEntity;
 import com.example.shopping.mall.repository.ProductCategoryRepository;
 import com.example.shopping.mall.repository.categoryRepository;
 import com.example.shopping.mall.repository.productRepository;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -54,10 +60,8 @@ public class productService {
 
 
     public String Img(MultipartFile file) throws IOException {
-        // 프로젝트 루트 경로 가져오기
-        String projectPath = new File("").getAbsolutePath();
         // 파일 저장 경로
-        String uploadDir = projectPath + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "static" + File.separator + "images" + File.separator;
+        String uploadDir = "C:/Users/a0102/Desktop/img/"; // 이미지 주소 저장경로
         File dir = new File(uploadDir);
         if (!dir.exists()) dir.mkdirs();
 
@@ -79,5 +83,59 @@ public class productService {
         ProductCategoryEntity pre = new ProductCategoryEntity(null ,productEntity, categoryEntity);
         productCategoryRepository.save(pre);
     }
+
+    public List<productDto> findByUser(Long id) {
+        List<productEntity> entities = productrepository.findByUserId(id);
+
+        return entities.stream().map(productEntity::toDto).collect(Collectors.toList());
+
+    }
+
+    public String processContentImages(String content) throws IOException {
+        Document doc = Jsoup.parse(content);
+        Elements imgTags = doc.select("img[src^=data:image]");  // Find all <img> tags with base64 data
+
+        if (imgTags.isEmpty()) {
+            return content;  // Return original content if there are no images
+        }
+
+        for (Element img : imgTags) {
+            String base64Data = img.attr("src");
+            String savedImageName = saveBase64Image(base64Data);
+
+            // Replace the img's src attribute with the new path
+            img.attr("src", "/"+ savedImageName);
+        }
+
+        return doc.toString();
+    }
+
+    public String saveBase64Image(String base64String) throws IOException {
+        String[] parts = base64String.split(",");
+        String imageString = parts[1];
+        byte[] data = Base64.getDecoder().decode(imageString);
+
+        String extension;
+        switch (parts[0]) {  // Check the image type
+            case "data:image/jpeg;base64":
+                extension = "jpeg";
+                break;
+            case "data:image/png;base64":
+                extension = "png";
+                break;
+            default:
+                throw new IOException("Unsupported image type");
+        }
+
+        String fileName = System.currentTimeMillis() + "_" + UUID.randomUUID().toString().replaceAll("[^a-zA-Z0-9]", "") + extension;
+        String imagePath = "C:/Users/a0102/Desktop/img/" + fileName; // 이미지 주소 저장경로
+
+        try (OutputStream stream = new FileOutputStream(imagePath)) {
+            stream.write(data);
+        }
+
+        return fileName;
+    }
+
 
 }
