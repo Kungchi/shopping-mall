@@ -23,7 +23,7 @@ public class userApiController {
     @Autowired
     private userService userService;
 
-    @PostMapping("/api/register")
+    @PostMapping("/api/register") // 회원가입하는 RESTAPI
     public ResponseEntity<?> register(@RequestBody userDto dto) {
         try {
             userDto registered = userService.register(dto);
@@ -33,7 +33,7 @@ public class userApiController {
         }
     }
 
-    @PostMapping("/api/login")
+    @PostMapping("/api/login") // 로그인하는 RESTAPI
     public ResponseEntity<?> login(@RequestBody userDto dto, HttpSession session) {
         try {
             userEntity entity = userService.login(dto);
@@ -46,26 +46,9 @@ public class userApiController {
         }
     }
 
-    @PostMapping("/logout")
+    @PostMapping("/logout") // 로그아웃하는 RESTAPI
     public ResponseEntity<?> logout(HttpSession session) {
         session.removeAttribute("user");
         return ResponseEntity.ok().build();
-    }
-
-
-    //혹시 모르니까 만들어놨음
-    @GetMapping("/api/user")
-    public ResponseEntity<?> getUser(HttpSession session) {
-        userEntity user = (userEntity) session.getAttribute("user");
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
-        }
-
-        try {
-            userDto userDto = user.toDto();
-            return ResponseEntity.ok(userDto);
-        } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
-        }
     }
 }

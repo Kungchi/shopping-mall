@@ -18,7 +18,7 @@ public class productApiController {
     @Autowired
     productService productService;
 
-    @PostMapping("/api/products")
+    @PostMapping("/api/products") // 상품을 등록하는 RESTAPI
     public ResponseEntity<?> registerProduct(@RequestParam("file") MultipartFile file,
                                              @RequestParam("title") String title,
                                              @RequestParam("content") String content,
@@ -48,5 +48,4 @@ public class productApiController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 }

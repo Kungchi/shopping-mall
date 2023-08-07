@@ -19,7 +19,7 @@ public class userService {
     private userRepository userRepository;
 
     @Transactional
-    public userDto register(userDto dto) {
+    public userDto register(userDto dto) { // 회원가입한 정보를 데이터베이스에 저장
 
         userEntity userEntity = dto.toEntity();
         String username = userEntity.getUsername();
@@ -32,7 +32,7 @@ public class userService {
         return userEntity.toDto();
     }
 
-    public userEntity login(userDto dto) {
+    public userEntity login(userDto dto) { // 데이터베이스에 로그인할때 입력한 정보를 검색하는 메소드
         Optional<userEntity> target = userRepository.findByUsername(dto.getUsername());
         if (!target.isPresent()) {
             throw new IllegalArgumentException("가입되지 않은 사용자입니다.");

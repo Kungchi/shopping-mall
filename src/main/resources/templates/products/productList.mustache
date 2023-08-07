@@ -12,7 +12,11 @@
                     <a href="/products/show/{{id}}">
                         <h5 class="card-title">{{title}}</h5>
                         <p class="card-text"><small class="text-muted">{{price}}원</small></p>
+                        <p class="card-text"><small class="text-muted">활성화상태 : {{status}}</small></p>
                     </a>
+                    <form action="/api/productList/active/{{id}}" method="post">
+                        <button type="submit">활성화 비활성화</button>
+                    </form>
                 </div>
             </div>
         </div>

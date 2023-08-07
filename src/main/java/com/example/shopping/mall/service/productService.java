@@ -34,18 +34,18 @@ public class productService {
     @Autowired
     categoryRepository categoryRepository;
 
-    public List<productDto> index() {
+    public List<productDto> index() { // 전 상품을 데이터베이스에서 조회
         List<productDto> dtos = productrepository.findAll()
                 .stream().map(entity -> entity.toDto()).collect(Collectors.toList());
         return dtos;
     }
 
-    public productDto show(Long id) {
+    public productDto show(Long id) { // 특정 상품의 자세한 정보를 데이터베이스에서 조회
         Optional<productEntity> target = productrepository.findById(id);
         return target.get().toDto();
     }
 
-    public List<productDto> indexById(List<Long> productIds) {
+    public List<productDto> indexById(List<Long> productIds) { // 상품들을 데이터베이스에서 조회
         List<productEntity> entities = productrepository.findByIdIn(productIds);
 
         Map<Long, productDto> productMap = entities.stream().collect(Collectors.toMap(
@@ -59,7 +59,7 @@ public class productService {
     }
 
 
-    public String Img(MultipartFile file) throws IOException {
+    public String Img(MultipartFile file) throws IOException { // 이미지를 서버에 저장하는 메소드
         // 파일 저장 경로
         String uploadDir = "C:/Users/a0102/Desktop/img/"; // 이미지 주소 저장경로
         File dir = new File(uploadDir);
@@ -75,7 +75,7 @@ public class productService {
         return fileName;
     }
 
-    public void save(productDto dto, userEntity user, String category) {
+    public void save(productDto dto, userEntity user, String category) { // 상품을 데이터베이스에 등록하고 카테고리에 등록하는 메소드
 
         productEntity productEntity = productrepository.save(dto.toEntity(user));
         categoryEntity categoryEntity = categoryRepository.findByName(category);
@@ -91,7 +91,7 @@ public class productService {
 
     }
 
-    public String processContentImages(String content) throws IOException {
+    public String processContentImages(String content) throws IOException { // 상품을 등록할때 content에 이미지를 서버에 저장하는 메소드
         Document doc = Jsoup.parse(content);
         Elements imgTags = doc.select("img[src^=data:image]");  // Find all <img> tags with base64 data
 
@@ -110,7 +110,7 @@ public class productService {
         return doc.toString();
     }
 
-    public String saveBase64Image(String base64String) throws IOException {
+    public String saveBase64Image(String base64String) throws IOException { // base64로 되어있는 이미지를 해독하여 서버에 저장하는 메소드
         String[] parts = base64String.split(",");
         String imageString = parts[1];
         byte[] data = Base64.getDecoder().decode(imageString);
@@ -138,4 +138,22 @@ public class productService {
     }
 
 
+    public void active(Long id) { // 상품의 활성화, 비활성화 메소드
+        productEntity entity = productrepository.findById(id).get();
+
+        switch (entity.getStatus()) {
+            case "Active":
+                entity.setStatus("Disable");
+                productrepository.save(entity);
+                break;
+
+
+            case "Disable":
+                entity.setStatus("Active");
+                productrepository.save(entity);
+                break;
+
+        }
+
+    }
 }

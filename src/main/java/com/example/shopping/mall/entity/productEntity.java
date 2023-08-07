@@ -3,16 +3,14 @@ package com.example.shopping.mall.entity;
 import com.example.shopping.mall.dto.productDto;
 import com.example.shopping.mall.dto.userDto;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 @Getter
+@Setter
 @Table(name = "products")
 public class productEntity {
 
@@ -36,7 +34,10 @@ public class productEntity {
     @Column
     private String img;
 
+    @Column(nullable = false, length = 30)
+    private String status = "Active";
+
     public productDto toDto() {
-        return new productDto(id, title, content, price, img);
+        return new productDto(id, title, content, price, img, status);
     }
 }

@@ -33,7 +33,7 @@ public class orderController {
     @Autowired
     productService productService;
 
-    @GetMapping("/products/order/{id}")
+    @GetMapping("/products/order/{id}") // 상품을 주문하는 페이지
     public String index(@PathVariable Long id, Model model, HttpSession session) {
         productDto dto = productService.show(id);
         userEntity userEntity = (userEntity) session.getAttribute("user");
@@ -43,7 +43,7 @@ public class orderController {
         return "products/order";
     }
 
-    @GetMapping("/products/order/{id}/list")
+    @GetMapping("/products/order/{id}/list") // 로그인한 유저의 주문 목록을 보여주는 페이지
     public String orderList(@PathVariable Long id, Model model) {
         List<orderDto> dtos = orderService.orderList(id);
         List<Long> productId = dtos.stream().map(dto -> dto.getProduct_id()).collect(Collectors.toList());

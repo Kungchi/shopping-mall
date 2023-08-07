@@ -7,18 +7,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class userController {
 
-    @GetMapping("/login")
+    @GetMapping("/login") // 로그인 페이지 보여주기
     public String login() {
 
         return "login/login";
     }
 
-    @GetMapping("/register")
+    @GetMapping("/register") // 회원가입 페이지 보여주기
     public String register() {
         return "login/register";
     }
 
-    @GetMapping("/profile")
+    @GetMapping("/profile") // profile 보여주기
     public String profile() {
         return "users/profile";
     }

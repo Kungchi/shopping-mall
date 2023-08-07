@@ -12,8 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,19 +26,25 @@ public class productController {
     @Autowired
     userService userService;
 
-    @GetMapping("/products")
+    @GetMapping("/products") // 전 상품 보여주기
     public String index(Model model, HttpSession session) {
         List<productDto> dtos = productService.index();
-        Long userId = (Long) session.getAttribute("userId");
-        userEntity userEntity = userService.find(userId);
-        
+        Iterator<productDto> iterator = dtos.iterator();
 
+        while (iterator.hasNext()) {
+            productDto dto = iterator.next();
+            if(!dto.getStatus().equals("Active")) {
+                iterator.remove();
+            }
+        }
+
+        userEntity userEntity =(userEntity) session.getAttribute("user");
         model.addAttribute("productDto", dtos);
         model.addAttribute("userEntity", userEntity);
         return "products/index";
     }
 
-    @GetMapping("/products/show/{id}")
+    @GetMapping("/products/show/{id}") // 상품 자세히 보기
     public String show(@PathVariable Long id, Model model, HttpSession session) {
         productDto dto = productService.show(id);
         userEntity entity = (userEntity) session.getAttribute("user");
@@ -47,18 +55,24 @@ public class productController {
         return "products/show";
     }
 
-    @GetMapping("/products/new")
+    @GetMapping("/products/new") // 상품을 등록하는 페이지 보여주기 
     public String newProduct() {
         return "products/new";
     }
 
-    @GetMapping("/products/productList")
+    @GetMapping("/products/productList") // 로그인한 유저의 등록한 상품 리스트 보여주기
     public String editProduct(HttpSession session, Model model) {
         userEntity user =(userEntity) session.getAttribute("user");
         List<productDto> dtos = productService.findByUser(user.getId());
 
         model.addAttribute("productDtos", dtos);
         return "products/productList";
+    }
+
+    @PostMapping("/api/productList/active/{id}") // 상품을 활성화하냐 비활성화 하냐 하기
+    public String active(@PathVariable Long id) {
+        productService.active(id);
+        return "redirect:/products";
     }
 
 }

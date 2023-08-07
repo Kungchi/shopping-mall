@@ -15,7 +15,7 @@ public class orderApiController {
     @Autowired
     orderService orderService;
 
-    @PostMapping("/api/order/{id}")
+    @PostMapping("/api/order/{id}") // 상품을 주문하는 RESTAPI
     public ResponseEntity<orderDto> order(@PathVariable Long id, @RequestBody orderDto dto) {
         orderDto ordered = orderService.order(dto);
         return ordered != null ? ResponseEntity.status(HttpStatus.OK).body(ordered) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
