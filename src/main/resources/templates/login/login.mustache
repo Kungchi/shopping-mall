@@ -112,7 +112,7 @@
             if (response.ok) {
                 alert("로그인이 완료되었습니다.");
                 console.log("로그인이 완료되었습니다.");
-                window.location.replace("http://localhost:8080/products");
+                window.location.replace("/products/0");
             } else {
                 response.text().then(errorMessage => {
                     alert("로그인 실패: " + errorMessage);

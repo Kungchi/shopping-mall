@@ -34,9 +34,17 @@ public class productService {
     @Autowired
     categoryRepository categoryRepository;
 
-    public List<productDto> index() { // 전 상품을 데이터베이스에서 조회
-        List<productDto> dtos = productrepository.findAll()
-                .stream().map(entity -> entity.toDto()).collect(Collectors.toList());
+    public List<productDto> index(Long id) { // 전 상품을 데이터베이스에서 조회
+        List<productDto> dtos = new ArrayList<>();
+
+        if(id == 0)
+            dtos = productrepository.findAll()
+                    .stream().map(entity -> entity.toDto()).collect(Collectors.toList());
+        else {
+            List<ProductCategoryEntity> entityList = productCategoryRepository.findByCategoryId(id);
+            dtos = productrepository.findByIdIn(entityList.stream().map(entity -> entity.getId()).collect(Collectors.toList()))
+                    .stream().map(entity -> entity.toDto()).collect(Collectors.toList());
+        }
         return dtos;
     }
 

@@ -26,9 +26,10 @@ public class productController {
     @Autowired
     userService userService;
 
-    @GetMapping("/products") // 전 상품 보여주기
-    public String index(Model model, HttpSession session) {
-        List<productDto> dtos = productService.index();
+    @GetMapping("/products/{id}") // 전 상품 보여주기
+    public String index(@PathVariable Long id ,Model model, HttpSession session) {
+
+        List<productDto> dtos = productService.index(id);
         Iterator<productDto> iterator = dtos.iterator();
 
         while (iterator.hasNext()) {
