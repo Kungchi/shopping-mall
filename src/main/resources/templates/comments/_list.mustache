@@ -2,20 +2,18 @@
     {{#commentDtos}}
         <div class="card m-4" id="comments-{{id}}">
             <div class="card-header">
-                {{nickname}}
+                {{user_id}}
                 <button type="button" class="btn btn-sm btn-outline-primary"
                         data-bs-toggle="modal"
                         data-bs-target="#comment-edit-modal"
                         data-bs-id={{id}}
-                        data-bs-nickname={{nickname}}
-                        data-bs-body={{body}}
-                        data-bs-article-id={{articleId}}>
+                        data-bs-body={{content}}>
                     수정
                 </button>
                 <button class="btn btn-sm btn-outline-danger" data-delete-id={{id}} id="comment-delete-btn">삭제</button>
             </div>
             <div class="card-body">
-                {{body}}
+                {{content}}
             </div>
         </div>
     {{/commentDtos}}

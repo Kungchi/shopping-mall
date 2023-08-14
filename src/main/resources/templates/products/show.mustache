@@ -11,7 +11,10 @@
     </div>
 {{/productDto}}
 
-{{>comments/_comments}}
+    {{#userEntity}}
+        <!-- 리뷰  -->
+        {{>comments/_comments}}
+    {{/userEntity}}
 
 <script>
     {

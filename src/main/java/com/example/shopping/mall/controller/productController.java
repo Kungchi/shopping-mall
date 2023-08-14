@@ -1,9 +1,7 @@
 package com.example.shopping.mall.controller;
-import com.example.shopping.mall.dto.OrderProductDto;
-import com.example.shopping.mall.dto.orderDto;
-import com.example.shopping.mall.dto.productDto;
-import com.example.shopping.mall.dto.userDto;
+import com.example.shopping.mall.dto.*;
 import com.example.shopping.mall.entity.userEntity;
+import com.example.shopping.mall.service.commentService;
 import com.example.shopping.mall.service.productService;
 import com.example.shopping.mall.service.userService;
 import jakarta.servlet.http.HttpSession;
@@ -25,6 +23,8 @@ public class productController {
     productService productService;
     @Autowired
     userService userService;
+    @Autowired
+    commentService commentService;
 
     @GetMapping("/products/{id}") // 전 상품 보여주기
     public String index(@PathVariable Long id ,Model model, HttpSession session) {
@@ -48,9 +48,11 @@ public class productController {
     @GetMapping("/products/show/{id}") // 상품 자세히 보기
     public String show(@PathVariable Long id, Model model, HttpSession session) {
         productDto dto = productService.show(id);
+        List<commentDto> commentDtos = commentService.index(id);
         userEntity entity = (userEntity) session.getAttribute("user");
 
-
+        model.addAttribute("commentDtos", commentDtos);
+        model.addAttribute("userEntity", entity);
         model.addAttribute("logined", entity != null);
         model.addAttribute("productDto", dto);
         return "products/show";

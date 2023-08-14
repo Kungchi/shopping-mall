@@ -2,16 +2,10 @@
     <div class="card-body">
         <form>
             <div class="mb-3">
-                <label class="form-label">닉네임</label>
-                <input type="text" class="form-control form-control-sm" id="new-comment-nickname">
+                <label class="form-label">리뷰 내용</label>
+                <textarea type="text" class="form-control form-control-sm" rows="3" id="new-comment-content"></textarea>
             </div>
-            <div class="mb-3">
-                <label class="form-label">댓글 내용</label>
-                <textarea type="text" class="form-control form-control-sm" rows="3" id="new-comment-body"></textarea>
-            </div>
-            {{#article}}
-                <input type="hidden" id="new-comment-article-id" value="{{id}}">
-            {{/article}}
+                <input type="hidden" id="new-comment-user-id" value="{{id}}">
             <button type="button" class="btn btn-outline-primary btn-sm" id="comment-create-btn">댓글 작성</button>
         </form>
     </div>
@@ -23,14 +17,12 @@
 
       commentCreateBtn.addEventListener("click", function() {
         const comment = {
-            nickname: document.querySelector("#new-comment-nickname").value,
-            body: document.querySelector("#new-comment-body").value,
-            article_id: document.querySelector("#new-comment-article-id").value
+            content: document.querySelector("#new-comment-content").value,
+            user_id: document.querySelector("#new-comment-user-id").value
         };
+        console.log({{productDto.id}});
 
-        console.log(comment);
-
-        const url = "/api/articles/" + comment.article_id + "/comments";
+        const url = "/api/" + {{productDto.id}} + "/comments";
         fetch(url, {
             method: "post",
             body: JSON.stringify(comment),
