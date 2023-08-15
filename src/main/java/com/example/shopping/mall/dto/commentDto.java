@@ -19,4 +19,7 @@ public class commentDto {
     public commentEntity toEntity(userEntity userEntity, productEntity productEntity) {
         return new commentEntity(null, productEntity, content, userEntity);
     }
+    public commentEntity toEntity(Long id ,userEntity userEntity, productEntity productEntity) {
+        return new commentEntity(id, productEntity, content, userEntity);
+    }
 }
